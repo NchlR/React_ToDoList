@@ -3,11 +3,38 @@ import Todo from "./components/Todo.jsx";
 import Title from "./components/Title.jsx";
 import Modal from "./components/Modal.jsx";
 import Counter from "./components/Counter.jsx";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
-  return <Counter />;
   const [showModal, setShowModal] = useState(false);
+
+  function onTodoDelete() {
+    setShowModal(true);
+  }
+
+  function cancelModal() {
+    setShowModal(false);
+  }
+
+  function confirmModal() {
+    setShowModal(false);
+  }
+
+  useEffect(() => {
+    console.log('ONLY on mount')
+  }, [])
+  
+  useEffect(() => {
+    console.log(`on mount AND on ${showModal} change`)
+  }, [showModal])
+
+  useEffect(() => {
+    console.log('EVERY render')
+  })
+
+
+
+
 
   return (
     <div>
@@ -22,11 +49,17 @@ function App() {
         <button onClick={() => setShowModal(true)}>Add todo</button>
       </div>
       <div className="todo__wrapper">
-        <Todo title="Finish Frontend Simplified" />
-        <Todo title="Finish Interview Section" />
-        <Todo title="Land a $100k Job" />
+        <Todo onTodoDelete={onTodoDelete} title="Finish Frontend Simplified" />
+        <Todo onTodoDelete={onTodoDelete} title="Finish Interview Section" />
+        <Todo onTodoDelete={onTodoDelete} title="Land a $100k Job" />
       </div>
-      {showModal && <Modal title="Confirm Delete?" />}
+      {showModal && (
+        <Modal
+          cancelModal={cancelModal}
+          confirmModal={confirmModal}
+          title="Confirm Delete?"
+        />
+      )}
     </div>
   );
 }

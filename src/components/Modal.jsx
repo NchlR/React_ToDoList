@@ -1,6 +1,6 @@
 import "./Modal.css";
 
-function Modal({ title }) {
+function Modal({ title, cancelModal, confirmModal }) {
   return (
     <>
       <div className="modal">
@@ -8,15 +8,13 @@ function Modal({ title }) {
         <div className="modal__buttons">
           <button
             className="btn btn__cancel"
-            onClick={() => console.log("Cancel")}
+            onClick={cancelModal}
           >
             Cancel
           </button>
           <button
             className="btn"
-            onClick={() => {
-              console.log("Confirm");
-            }}
+            onClick={confirmModal}
           >
             Confirm
           </button>
